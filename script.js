@@ -67,57 +67,24 @@ switchModeBtn.addEventListener('click', function() {
         markTable.classList.toggle('markByColor');
         markTable.classList.toggle('markByNumber');
         switchModeBtn.textContent = "Notes par couleur";
-
-        markInputs.forEach((input, index) => {
-            input.addEventListener('input', (event) => {
-                let value = parseInt(event.target.value);
-                if (isNaN(value) || value < 1 || value > 4) {
-                    event.target.value = '';
-                    return;
-                }
-                if (index < markInputs.length - 1) {
-                    markInputs[index + 1].focus();
-                } else {
-                    markInputs[0].focus();
-                }
-            });
-        });
-        
-        //if color mode is set, switch to number mode
+         
+    //if color mode is set, switch to number mode
     } else if (markTable.classList.contains('markByColor')) {
         markTable.classList.remove('markByColor');
         markTable.classList.add('markByNumber');
         switchModeBtn.textContent = "Notes par chiffre";
-
-
-    
-        markInputs.forEach((input, index) => {
-            input.addEventListener('input', (event) => {
-                const colorNumber = parseInt(event.target.value);
-                if (isNaN(colorNumber) || value < 1 || value > 5) {
-                    event.target.value = '';
-                    return;
-                }
-                assignNumberBackground(value);
-                if (index < markInputs.length - 1) {
-                    markInputs[index + 1].focus();
-                } else {
-                    markInputs[0].focus();
-                }
-            });
-        });
     }
-    // Ajoutez un gestionnaire d'événements "keydown" à l'élément markTable
+    // Add Keydown listener event 
     markTable.addEventListener('keydown', (event) => {
-    // Récupérez la touche appuyée sous forme de chiffre
+    // get key pressed value
         const keyNumber = parseInt(event.key);
 
-        // Vérifiez si la touche appuyée est l'une des options valides (1, 2, 3, 4)
+        // Check if the number picked by the user is correct
         if (!isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= 4) {
-            // Récupérez l'input actuellement en focus
+            // Get the value on the focused input
             const focusedInput = document.activeElement;
             
-            // Appliquez la classe correspondante à la couleur en fonction du chiffre
+            // associates a class according to the color chosen by the user with a key
             focusedInput.classList.remove('colorOne', 'colorTwo', 'colorThree', 'colorFour');
             if (keyNumber === 1) {
                 focusedInput.classList.add('colorOne');
@@ -131,8 +98,3 @@ switchModeBtn.addEventListener('click', function() {
         }
     });
 });
-
-// Condition pour exécuter le code du gestionnaire d'événements "keydown" uniquement si la classe ".markByColor" existe
-if (markTable.classList.contains('markByColor')) {
-    
-}
