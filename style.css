@@ -91,7 +91,7 @@ input::-webkit-outer-spin-button {
 	margin:0;
 }
 
-/* Masquer le curseur dans les inputs sélectionnés */
+/* Inputs on focus details */
 input.mark:focus {
     caret-color: transparent;
     outline: none;
@@ -101,6 +101,7 @@ input.mark:focus {
 input.mark:hover{
     cursor: pointer;
 }
+/* color mode table */
 .markByColor{
     >tbody{}
     >tbody>tr>td>.defaultColor{
