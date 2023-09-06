@@ -39,7 +39,7 @@ table{
 }
 
 .markByNumber {
-    box-shadow: 0 0 4px black;
+    box-shadow: 0 0 8px 2px black;
 }
 .markByColor::before {
     content:"";
@@ -97,7 +97,7 @@ input.mark:hover{
 }
 .markByColor{
     >tbody{}
-    >tbody>tr>td>.colorDefault{
+    >tbody>tr>td>.defaultColor{
         background-color: rgb(102, 245, 36);
         color: transparent;
     }

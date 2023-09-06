@@ -1,43 +1,38 @@
-// Récupérez les éléments HTML dont vous avez besoin
+// Get elements of the html document
 const generateTableBtn = document.getElementById('generateTableBtn');
 const main = document.getElementById('main');
 const markTable = document.getElementById('markTable');
-// Récupérez le bouton "Changer le mode" et les éléments d'entrée de notes
 const switchModeBtn = document.getElementById('switchModeBtn');
-const markInputs = document.querySelectorAll('.mark');
+const markInputs = document.querySelectorAll('.mark');  
 
-// Ajoutez un gestionnaire d'événements au bouton generateTableBtn
+// add an event listener to make the table and button appear
 generateTableBtn.addEventListener('click', () => {
-    // Affichez le bouton switchModeBtn et le tableau
     switchModeBtn.style.opacity = '1';
     markTable.style.opacity = '1';
-    
-    // Cachez le bouton generateTableBtn
     generateTableBtn.style.opacity = '0';
 });
 
+// Reinitialize all the data from table inputs
 function resetTableData() {
     markInputs.forEach(input => {
-      input.value = ''; // Réinitialise le contenu de chaque input à une chaîne vide
+      input.value = '';
     });
 };
 
-if (markTable.classList.contains)
-
-// Ajoutez un gestionnaire d'événements à chaque input
+// Add an event listener in a loop to watch every inputs
 markInputs.forEach((input, index) => {
     input.addEventListener('input', (event) => {
         const value = parseInt(event.target.value);
         if (isNaN(value) || value < 1 || value > 5) {
-            event.target.value = ''; // Réinitialisez l'input en cas d'entrée incorrecte
+            event.target.value = ''; // Reinitialize input if entry is incorrect
             return;
         }
         
-        // Passez automatiquement au prochain input s'il existe
+        // Automatically switch to the next input
         if (index < markInputs.length - 1) {
             markInputs[index + 1].focus();
         } else {
-            // Si c'est le dernier input, revenez au premier input
+            // If last input, go to the first one
             markInputs[0].focus();
         }
     });
@@ -45,7 +40,7 @@ markInputs.forEach((input, index) => {
 
 
 
-
+// Associate numbers with classes
 function assignNumberBackground(number) {
     const element = document.getElementById(number);
     
@@ -61,88 +56,80 @@ function assignNumberBackground(number) {
 };
 
 
-// Ajoutez un gestionnaire d'événements "click" au bouton switchModeBtn
+// Add event listener on click 
 switchModeBtn.addEventListener('click', function() {
-    // Réinitialise les données du tableau
+    // Reset all datas on modes switches
     resetTableData();
     
-
-
-    // Vérifie si le mode couleur est activé ou désactivé
+    // Check for markByNumber class in the Table
     if (markTable.classList.contains('markByNumber')) {
-        // Si le mode couleur est désactivé, active-le
+        // If number mode, switch to color mode
         markTable.classList.toggle('markByColor');
         markTable.classList.toggle('markByNumber');
-        markInputs.classList.toggle('colorDefault');
+        switchModeBtn.textContent = "Notes par couleur";
 
         markInputs.forEach((input, index) => {
             input.addEventListener('input', (event) => {
                 let value = parseInt(event.target.value);
                 if (isNaN(value) || value < 1 || value > 4) {
-                    event.target.value = ''; // Réinitialisez l'input en cas d'entrée incorrecte
+                    event.target.value = '';
                     return;
                 }
-                // Passez automatiquement au prochain input s'il existe
                 if (index < markInputs.length - 1) {
                     markInputs[index + 1].focus();
                 } else {
-                    // Si c'est le dernier input, revenez au premier input
                     markInputs[0].focus();
                 }
             });
         });
-    } else {
-
-        // Si le mode de notation par couleur est activé, désactivez-le
+        
+        //if color mode is set, switch to number mode
+    } else if (markTable.classList.contains('markByColor')) {
         markTable.classList.remove('markByColor');
         markTable.classList.add('markByNumber');
-        
-        // Ajoutez un gestionnaire d'événements "keydown" à l'élément markTable
-        markTable.addEventListener('keydown', (event) => {
-        // Récupérez la touche appuyée sous forme de chiffre
-            const keyNumber = parseInt(event.key);
+        switchModeBtn.textContent = "Notes par chiffre";
+
+
     
-            // Vérifiez si la touche appuyée est l'une des options valides (1, 2, 3, 4)
-            if (!isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= 4) {
-                // Récupérez l'input actuellement en focus
-                const focusedInput = document.activeElement;
-                
-                // Appliquez la classe correspondante à la couleur en fonction du chiffre
-                focusedInput.classList.remove('colorOne', 'colorTwo', 'colorThree', 'colorFour');
-                if (keyNumber === 1) {
-                    focusedInput.classList.add('colorOne');
-                } else if (keyNumber === 2) {
-                    focusedInput.classList.add('colorTwo');
-                } else if (keyNumber === 3) {
-                    focusedInput.classList.add('colorThree');
-                } else if (keyNumber === 4) {
-                    focusedInput.classList.add('colorFour');
-                }
-            }
-        });
-
-
         markInputs.forEach((input, index) => {
             input.addEventListener('input', (event) => {
                 const colorNumber = parseInt(event.target.value);
-                if (isNaN(colorNumber) || value < 1 || value > 4) {
-                    event.target.value = ''; // Réinitialisez l'input en cas d'entrée incorrecte
+                if (isNaN(colorNumber) || value < 1 || value > 5) {
+                    event.target.value = '';
                     return;
                 }
-                
-                // Appliquez la couleur en fonction du chiffre choisi par l'utilisateur
                 assignNumberBackground(value);
-                
-                // Passez automatiquement au prochain input s'il existe
                 if (index < markInputs.length - 1) {
                     markInputs[index + 1].focus();
                 } else {
-                    // Si c'est le dernier input, revenez au premier input
                     markInputs[0].focus();
                 }
             });
         });
     }
+    // Ajoutez un gestionnaire d'événements "keydown" à l'élément markTable
+    markTable.addEventListener('keydown', (event) => {
+    // Récupérez la touche appuyée sous forme de chiffre
+        const keyNumber = parseInt(event.key);
+
+        // Vérifiez si la touche appuyée est l'une des options valides (1, 2, 3, 4)
+        if (!isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= 4) {
+            // Récupérez l'input actuellement en focus
+            const focusedInput = document.activeElement;
+            
+            // Appliquez la classe correspondante à la couleur en fonction du chiffre
+            focusedInput.classList.remove('colorOne', 'colorTwo', 'colorThree', 'colorFour');
+            if (keyNumber === 1) {
+                focusedInput.classList.add('colorOne');
+            } else if (keyNumber === 2) {
+                focusedInput.classList.add('colorTwo');
+            } else if (keyNumber === 3) {
+                focusedInput.classList.add('colorThree');
+            } else if (keyNumber === 4) {
+                focusedInput.classList.add('colorFour');
+            }
+        }
+    });
 });
 
 // Condition pour exécuter le code du gestionnaire d'événements "keydown" uniquement si la classe ".markByColor" existe
