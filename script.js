@@ -38,36 +38,16 @@ markInputs.forEach((input, index) => {
     });
 });
 
-
-
-// Associate numbers with classes
-function assignNumberBackground(number) {
-    const element = document.getElementById(number);
-    
-    if (/^1$/.test(number)) {
-      element.classList.add('colorOne');
-    } else if (/^2$/.test(number)) {
-      element.classList.add('colorTwo');
-    } else if (/^3$/.test(number)) {
-      element.classList.add('colorThree');
-    } else if (/^4$/.test(number)) {
-      element.classList.add('colorFour');
-    }
-};
-
-
-// Add event listener on click 
-switchModeBtn.addEventListener('click', function() {
+    // Add event listener on click 
+    switchModeBtn.addEventListener('click', function() {
     // Reset all datas on modes switches
     resetTableData();
-    
     // Check for markByNumber class in the Table
     if (markTable.classList.contains('markByNumber')) {
         // If number mode, switch to color mode
         markTable.classList.toggle('markByColor');
         markTable.classList.toggle('markByNumber');
         switchModeBtn.textContent = "Notes par couleur";
-         
     //if color mode is set, switch to number mode
     } else if (markTable.classList.contains('markByColor')) {
         markTable.classList.remove('markByColor');
@@ -78,12 +58,10 @@ switchModeBtn.addEventListener('click', function() {
     markTable.addEventListener('keydown', (event) => {
     // get key pressed value
         const keyNumber = parseInt(event.key);
-
         // Check if the number picked by the user is correct
         if (!isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= 4) {
             // Get the value on the focused input
             const focusedInput = document.activeElement;
-            
             // associates a class according to the color chosen by the user with a key
             focusedInput.classList.remove('colorOne', 'colorTwo', 'colorThree', 'colorFour');
             if (keyNumber === 1) {
